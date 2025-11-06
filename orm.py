@@ -3,9 +3,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import os
 
-SQLALCHEMY_DATABASE_URL = "postgresql://ocs:123456@localhost/TodoApplicationDatabase" #postgreSQL
+SQLALCHEMY_DATABASE_URL = os.environ.get('DATABASE_URL') #postgreSQL
 # SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:test1234!@localhost:3306/todoapp" #mySQL
+if SQLALCHEMY_DATABASE_URL.startswith("postgres://"):
+    SQLALCHEMY_DATABASE_URL = SQLALCHEMY_DATABASE_URL.replace("postgres://","postgresql://",1)
+
 
 
 '''creating sqlalchmey engine, that will help us in establishing connection between database and fastapi application.
